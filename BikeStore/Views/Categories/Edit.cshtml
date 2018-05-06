@@ -10,23 +10,17 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Category</legend>
 
         @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+        <div class="form-group">
+                @Html.LabelFor(model => model.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+              
+            <div class="alert alert-danger">
+                <strong>Error</strong> @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            </div>
+                <input type="submit" class="btn btn-primary" value="Save" />
 }
 
 <div>

@@ -18,24 +18,11 @@ namespace BikeStore.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
-        }
 
-        //
-        // GET: /Categories/Details/5
+            return View(db.Categories.Include(p => p.Products).ToList());
+        }  
 
-        public ActionResult Details(int id = 0)
-        {
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        //
-        // GET: /Categories/Create
+        [Authorize]
 
         public ActionResult Create()
         {
@@ -46,6 +33,7 @@ namespace BikeStore.Controllers
         // POST: /Categories/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
@@ -61,7 +49,7 @@ namespace BikeStore.Controllers
 
         //
         // GET: /Categories/Edit/5
-
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Category category = db.Categories.Find(id);
@@ -77,6 +65,7 @@ namespace BikeStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
@@ -90,7 +79,7 @@ namespace BikeStore.Controllers
 
         //
         // GET: /Categories/Delete/5
-
+        [Authorize]
         public ActionResult Delete(int id = 0)
         {
             Category category = db.Categories.Find(id);
@@ -103,7 +92,7 @@ namespace BikeStore.Controllers
 
         //
         // POST: /Categories/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -4,32 +4,41 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Categories</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-
-
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
 
-</table>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-3 col-sm-3 product-block">
+            <div class="row">
+                <div class="col-10">
+                    @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-10">
+                    @Html.ActionLink(string.Format("{0} Products ({1})", item.Name, item.ProductsCount()), "Index", "Products", new { CategoryId = item.Id }, null)
+                    </div>
+                </div>
+            @if (Request.IsAuthenticated)
+            {
+                <div class="row">
+                    <div class="col-10">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </div></div>
+
+            }
+
+        </div>
+
+    }
+
+</div>

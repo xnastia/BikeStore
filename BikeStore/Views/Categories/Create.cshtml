@@ -4,27 +4,21 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Add category</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Category</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+<div class="form-group">
+    @Html.LabelFor(model => model.Name)
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    <div class="alert alert-danger">
+        <strong>Error</strong> @Html.ValidationMessageFor(model => model.Name)
+    </div>
+   
+</div>
+<input type="submit" class="btn btn-primary" value="Save" />
 }
 
 <div>

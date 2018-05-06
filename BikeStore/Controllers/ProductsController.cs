@@ -20,7 +20,7 @@ namespace BikeStore.Controllers
         //
         // GET: /Products/
 
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? MinPrice, int? MaxPrice, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? CategoryId, int? MinPrice, int? MaxPrice, int? page)
           
     {
         var products = db.Products.Include(p => p.Category).Include(p => p.Vendor).Include(p => p.Comments);
@@ -43,6 +43,11 @@ namespace BikeStore.Controllers
             {
                 products = products.Where(s => s.Name.Contains(searchString)
                                        || s.Description.Contains(searchString));
+            }
+            if (CategoryId != null)
+            {
+                products = products.Where(s => s.CategoryId == CategoryId);
+                ViewBag.CategoryId = CategoryId;
             }
             if (MinPrice != null)
             {

@@ -65,14 +65,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="center-block" style="margin-left: 40%;">
-                    @using (Html.BeginForm("AddToCart", "Cart"))
+                <div class="col-10">
+                    <div class="center-block" >
+                        @using (Html.BeginForm("AddToCart", "Cart"))
                     {
-                        @Html.Hidden("productId", item.Id)
-                        <input type="submit" class="btn btn-success btn-sm" value="Buy" />
+                            @Html.Hidden("productId", item.Id)
+                            <input type="submit" class="btn btn-success btn-sm" value="Buy" />
                     }
+                    </div>
+                    </div>
                 </div>
-            </div>
             <div class="row">
                 @if (Request.IsAuthenticated)
                 {
@@ -88,6 +90,7 @@
     page,
     sortOrder = ViewBag.CurrentSort,
     currentFilter = ViewBag.CurrentFilter,
+    CategoryId = ViewBag.CategoryId,
     MinPrice = ViewBag.MinPrice,
     MaxPrice = ViewBag.MaxPrice
 }))

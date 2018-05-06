@@ -23,8 +23,8 @@
                     @using (Html.BeginForm("RemoveFromCart", "Cart"))
                     {
                         @Html.Hidden("ProductId", line.Product.Id)
-                        
-                        <input class="actionButtons" type="submit" value="Remove" />
+
+    <input class="actionButtons" type="submit" class="btn btn-danger btn-sm" value="Remove" />
                     }
                 </td>
             </tr>
@@ -49,6 +49,6 @@
             <label>Phone</label>
             <input type="text" name="Phone" class="form-control" placeholder="Enter your phone">
         </div>
-        <input type="submit" class="btn btn-primary" value="Add order" />
+        <input type="submit" class="btn btn-primary" value="Complete order" />
     </form>
 </div>
