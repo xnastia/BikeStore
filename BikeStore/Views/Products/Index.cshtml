@@ -1,0 +1,104 @@
+﻿@model IEnumerable<BikeStore.Models.Product>
+
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Products</h2>
+
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", "Products", null, new { @class = "btn" })
+    </p>
+}
+
+
+<div class="row">
+    <div class="col-3 col-sm-3">
+       
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <input id="SearchString" name="SearchString" type="text" value="@ViewBag.SearchString" placeholder="Search...">
+
+                </div>
+                <div class="row">
+                    Price:
+                    <input id="MinPrice" name="MinPrice" type="text" value="@ViewBag.MinPrice" size="4"> - 
+                    <input id="MaxPrice" name="MaxPrice" type="text" value="@ViewBag.MaxPrice" size="4">
+                   
+                </div>
+                <div class="row">
+                <input type="submit" class="btn btn-success" value="Search" />
+                </div>
+            }
+        </div>
+    <div class="col-9 col-sm-9">
+        <div class="row">
+            <div class="center-block">
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm }) |
+                @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm })
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+{
+
+    <div class="col-3 col-sm-3 product-block">
+        <p>@Html.DisplayFor(modelItem => item.Name) - <span>@Html.DisplayFor(modelItem => item.Price)</span></p>
+            <b>@Html.DisplayFor(modelItem => item.Category.Name)</b>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@item.AverageRating()" aria-valuemin="0" aria-valuemax="5"></div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    @Html.ActionLink(string.Format("Details({0})", item.CommentsCount()), "Details", new { id = item.Id })
+                </div>
+            </div>
+            <div class="row">
+                <div class="center-block" style="margin-left: 40%;">
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.Hidden("productId", item.Id)
+                        <input type="submit" class="btn btn-success btn-sm" value="Buy" />
+                    }
+                </div>
+            </div>
+            <div class="row">
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+            </div>
+    </div>
+}
+        </div>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter,
+    MinPrice = ViewBag.MinPrice,
+    MaxPrice = ViewBag.MaxPrice
+}))
+
+
+    </div>
+</div>
+
+
+
+
+
+
+

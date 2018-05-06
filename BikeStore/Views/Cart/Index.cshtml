@@ -1,0 +1,54 @@
+﻿@model BikeStore.Models.Cart
+<h2>Cart</h2>
+
+<table width="90%" align="center">
+    <thead>
+        <tr>
+            <th align="center">Quantity</th>
+            <th align="left">Item</th>
+            <th align="right">Price</th>
+            <th align="right">Subtotal</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td align="center">@line.Quantity</td>
+                <td align="left">@line.Product.Name</td>
+                <td align="right">@line.Product.Price.ToString("c")</td>
+                <td align="right">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("ProductId", line.Product.Id)
+                        
+                        <input class="actionButtons" type="submit" value="Remove" />
+                    }
+                </td>
+            </tr>
+
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" align="right">Total:</td>
+            <td align="right">@Model.ComputeTotalValue().ToString("c")</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div id="checkout">
+    <form action="/Cart/Checkout" method="post">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="Name" class="form-control"  placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="Phone" class="form-control" placeholder="Enter your phone">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add order" />
+    </form>
+</div>

@@ -1,0 +1,84 @@
+﻿@model BikeStore.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Product</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Category.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Vendor.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Vendor.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<h3>
+    Comments
+     </h3>
+<div id="comments">
+@foreach (var comment in ViewBag.Comments) {
+    <div>
+        <strong>@comment.UserName</strong> <i>@comment.Rating</i>
+        @comment.Message
+     </div>
+            }
+        </div>
+<div id="add-comment">
+    <form action="/Comments/Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <input name="ProductId" type="hidden" value="@ViewBag.ProductId" />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name:</span>
+            </div>
+            <input name="UserName"  type="text" class="form-control" placeholder="Username">
+        </div>
+        
+        <div>
+            <select name="Rating">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Message:</span>
+            </div>
+            <textarea name="Message" class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <input type="submit" value="Add comment" />
+    </form>
+</div>
