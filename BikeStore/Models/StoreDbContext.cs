@@ -37,14 +37,22 @@ namespace BikeStore.Models
     var vendorComanche = new Vendor { Name = "Comanche" };
       db.Vendors.Add(vendorComanche);
 
-    db.Products.Add(new Product { Name = "Uma Mini", Description = "Dont buy this shit any more )))", 
-        Vendor = vendorXiaomi, Price= 10000,
+    db.Products.Add(new Product { Name = "Uma Mini", Description = "Dont buy this", 
+        Vendor = vendorXiaomi, Price= 15000,
         Category = catElectro });
     db.Products.Add(new Product
     {
         Name = "C1",
-        Description = "Dont buy this.",
+        Description = "Dont buy this",
         Price = 10000,
+        Vendor = vendorXiaomi,
+        Category = catElectro
+    });
+    db.Products.Add(new Product
+    {
+        Name = "QBike",
+        Description = "Dont buy this",
+        Price = 17000,
         Vendor = vendorXiaomi,
         Category = catElectro
     });
@@ -76,6 +84,14 @@ namespace BikeStore.Models
     {
         Name = "PRARIE 17",
         Price = 30000,
+        Description = "fdas",
+        Vendor = vendorComanche,
+        Category = catSport
+    });
+    db.Products.Add(new Product
+    {
+        Name = "PRARIE 19",
+        Price = 10000,
         Description = "fdas",
         Vendor = vendorComanche,
         Category = catSport
