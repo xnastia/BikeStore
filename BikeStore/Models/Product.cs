@@ -14,7 +14,7 @@ namespace BikeStore.Models
 
         public int VendorId { get; set; }       
         public Vendor Vendor { get; set; }
-
+        [Required]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
