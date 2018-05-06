@@ -16,9 +16,11 @@
                 @Html.LabelFor(model => model.Name)
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
               
-            <div class="alert alert-danger">
-                <strong>Error</strong> @Html.ValidationMessageFor(model => model.Name)
-            </div>
+           @if(ViewData.ModelState["Name"] != null && ViewData.ModelState["Name"].Errors.Any()) {
+    <div class="alert alert-danger">
+        <strong>Error</strong> @Html.ValidationMessageFor(model => model.Name)
+    </div>
+     }
             </div>
                 <input type="submit" class="btn btn-primary" value="Save" />
 }

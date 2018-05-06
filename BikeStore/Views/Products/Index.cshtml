@@ -21,24 +21,26 @@
 
 <div class="row">
     <div class="col-3 col-sm-3">
-       
-            @using (Html.BeginForm())
-            {
-                <div class="row">
-                    <input id="SearchString" name="SearchString" type="text" value="@ViewBag.SearchString" placeholder="Search...">
 
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="form-group">
+                    <input id="SearchString" class="form-control" name="SearchString" type="text" value="@ViewBag.SearchString" placeholder="Search...">
+                    </div>
                 </div>
-                <div class="row">
-                    Price:
-                    <input id="MinPrice" name="MinPrice" type="text" value="@ViewBag.MinPrice" size="4"> - 
-                    <input id="MaxPrice" name="MaxPrice" type="text" value="@ViewBag.MaxPrice" size="4">
-                   
+            <div class="row">
+                Price:
+                <div class="form-group">
+                    <input id="MinPrice" name="MinPrice" class="form-control form-control-sm" type="text" value="@ViewBag.MinPrice" size="4"> -
+                    <input id="MaxPrice" name="MaxPrice" class="form-control form-control-sm" type="text" value="@ViewBag.MaxPrice" size="4">
+                    </div>
                 </div>
-                <div class="row">
+            <div class="row">
                 <input type="submit" class="btn btn-success" value="Search" />
-                </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
     <div class="col-9 col-sm-9">
         <div class="row">
             <div class="center-block">
@@ -49,41 +51,45 @@
 
         <div class="row">
             @foreach (var item in Model)
-{
+            {
 
-    <div class="col-3 col-sm-3 product-block">
-        <p>@Html.DisplayFor(modelItem => item.Name) - <span>@Html.DisplayFor(modelItem => item.Price)</span></p>
-            <b>@Html.DisplayFor(modelItem => item.Category.Name)</b>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@item.AverageRating()" aria-valuemin="0" aria-valuemax="5"></div>
+                <div class="col-3 col-sm-3 product-block">
+                    <p>@Html.DisplayFor(modelItem => item.Name) - <span>@Html.DisplayFor(modelItem => item.Price)</span></p>
+                    <b>@Html.DisplayFor(modelItem => item.Category.Name)</b>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@item.AverageRating()" aria-valuemin="0" aria-valuemax="5"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            @Html.ActionLink(string.Format("Details({0})", item.CommentsCount()), "Details", new { id = item.Id })
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm">
-                    @Html.ActionLink(string.Format("Details({0})", item.CommentsCount()), "Details", new { id = item.Id })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10">
-                    <div class="center-block" >
-                        @using (Html.BeginForm("AddToCart", "Cart"))
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="center-block">
+                                @using (Html.BeginForm("AddToCart", "Cart"))
+                                {
+                                    @Html.Hidden("productId", item.Id)
+                                    <input type="submit" class="btn btn-success btn-sm" value="Buy" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Request.IsAuthenticated)
                     {
-                            @Html.Hidden("productId", item.Id)
-                            <input type="submit" class="btn btn-success btn-sm" value="Buy" />
+                        <div class="row">
+                            <div class="col-10">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </div>
+                        </div>
                     }
-                    </div>
-                    </div>
+
                 </div>
-            <div class="row">
-                @if (Request.IsAuthenticated)
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                }
-            </div>
-    </div>
-}
+            }
         </div>
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
 {
@@ -98,10 +104,3 @@
 
     </div>
 </div>
-
-
-
-
-
-
-

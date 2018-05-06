@@ -7,15 +7,17 @@
 <h2>Add category</h2>
 
 @using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()   
 
 <div class="form-group">
     @Html.LabelFor(model => model.Name)
     @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+@if(ViewData.ModelState["Name"] != null && ViewData.ModelState["Name"].Errors.Any()) {
     <div class="alert alert-danger">
         <strong>Error</strong> @Html.ValidationMessageFor(model => model.Name)
     </div>
+     }
+    
    
 </div>
 <input type="submit" class="btn btn-primary" value="Save" />

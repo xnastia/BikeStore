@@ -9,6 +9,7 @@ using BikeStore.Models;
 
 namespace BikeStore.Controllers
 {
+    [Authorize]
     public class VendorsController : Controller
     {
         private StoreDbContext db = new StoreDbContext();
