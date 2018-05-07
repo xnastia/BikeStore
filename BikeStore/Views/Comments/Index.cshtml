@@ -1,0 +1,7 @@
+﻿@model IEnumerable<BikeStore.Models.Comment>
+@{
+    Layout = null;
+}
+@foreach (var comment in Model) {
+   @Html.Partial("Comment",comment)
+}

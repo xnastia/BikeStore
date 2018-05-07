@@ -13,9 +13,10 @@ namespace BikeStore.Controllers
         //
         // GET: /Comments/
 
-        public ActionResult Index()
+        public ActionResult Index(int ProductId)
         {
-            return View();
+            var comments = db.Comments.Where(p =>p.ProductId == ProductId);
+            return View(comments.ToList());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

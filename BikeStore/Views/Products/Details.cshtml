@@ -37,14 +37,9 @@
 <h3>
     Comments
      </h3>
-<div id="comments">
-@foreach (var comment in ViewBag.Comments) {
-    <div>
-        <strong>@comment.UserName</strong> <i>@comment.Rating</i>
-        @comment.Message
-     </div>
-            }
-        </div>
+<div id="comments" data-url="@string.Format("/Comments/?ProductId={0}",ViewBag.ProductId)">
+    Loading....
+</div>
 <hr/>
 <h3>New coment
 </h3>
